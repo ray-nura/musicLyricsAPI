@@ -1,7 +1,7 @@
-/* Document level adjustments */
 html {
   font-size: 14px;
   background-color: var(--main-black-color);
+  font-family: "Muli", sans-serif;
   /* font-family: Arial, Helvetica, sans-serif;   */
 }
 * {
@@ -13,12 +13,12 @@ html {
   --tomato-main-color: #db1b34;
   --tomato2-main-color: #f92c47;
   --white-color: #ffffff;
-  --main-bg-color: #1c1c1e;
+  --main-bg-color: #262728;
   --table-color: #fbfbfb;
   --play-btn-color: #e7e9ee;
   --left-side-bg-color: #d1d6e1;
   --left-side-table-color: #c6c6c6;
-  --main-black-color: #000;
+  --main-black-color: #1D1E1F;
   --text-color: #a4aebf;
   --song-bg-color: #3e3e53;
   --box-shadow-color: #8e8e92;
@@ -70,9 +70,7 @@ input {
   padding-left: 20px;
   margin: 5px;
   width: 46%;
-  /* width: 48%; */
-  max-width: 465px;
-  /* max-width: 520px; */
+  max-width: 465px;  /* 520px; */
   min-height: 130px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -87,9 +85,10 @@ input {
 .result {
   font-family: "Muli", sans-serif;
   overflow: hidden;
-  margin: 0;
-  justify-content: center;
-  align-items: center;
+  margin: 0 auto;
+}
+.result h1{
+  text-align: center;
 }
 .container {
   width: 100%;
@@ -101,18 +100,16 @@ input {
   height: 15vh;
   width: 100%;
   border-radius: 10px;
-  /* margin: 5px; */
   margin: 5px 0;
   cursor: pointer;
   color: #fff;
-  /* flex: 1; */
   flex-grow: 1;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
   transition: all 500ms ease-in-out;
-  /* overflow: auto; */
+  overflow: hidden;
 }
 .slide .info {
   position: absolute;
@@ -127,15 +124,15 @@ input {
 .slide .playInfo {
   pointer-events: none;
   position: absolute;
-  width: 80vw;
+  width: 85%;
   font-size: 1rem;
-  bottom: 5%;
-  left: 5%;
+  /* bottom: 5%; */
+  top: 78%;
+  left: 10%;
   margin: 0;
   opacity: 0;
 }
 .slide.active {
-  /* flex: 10; */
   flex-grow: 10;
   height: 70vh;
 }
@@ -145,12 +142,11 @@ input {
   pointer-events: auto;
 }
 audio {
-  max-width: 70vw;
-  margin-right: 25%;
+  width: 90%;
 }
 button {
   font-size: 1rem;
-  /* margin: 10px; */
+  margin-top: 10px;
   padding: 10px 30px;
   border-radius: 15px;
   border: none;
@@ -162,13 +158,11 @@ button:hover {
   background-color: var(--tomato-main-color);
 }
 .slide .middle {
-  position: absolute;
-  /* width: 30vw; */
-  font-size: 1rem;
-  bottom: 50%;
+  top: 73%;
   left: 50%;
-  transform: translate(-50%,-50%);
-  margin: 0;
+  display: flex;
+  transform: translate(-50%, -50%);
+  position: absolute;
   opacity: 0;
 }
 .slide.active .middle {
@@ -198,15 +192,8 @@ button:hover {
   padding: 2rem;
   overflow: auto;
   background-color: var(--main-bg-color);
-}
-/* #showLyrics .showLyrics {
-  background-color: var(--main-bg-color);
-  max-width: 20% auto;
-  padding: 2rem;
-  width: 70%;
-  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.5), 0 7px 20px 0 rgba(0, 0, 0, 0.5);
   opacity: 0.95;
-} */
+}
 .closeBtn {
   color: var(--play-btn-color);
   float: right;
@@ -219,17 +206,11 @@ button:hover {
   text-decoration: none;
   cursor: pointer;
 }
-
 /* play music animation */
-.middle {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-}
 .bar {
   width: 10px;
   height: 70px;
+  margin-left: 2px;
   background: #fff;
   display: inline-block;
   transform-origin: bottom center;
@@ -278,15 +259,17 @@ button:hover {
   }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 850px) {
   html {
     font-size: 18px;
   }
   main {
     max-width: 1800px;
-    padding: 3rem;
+    padding: 2rem;
+    margin: 0 auto;
   }
   .card {
+    width: 32%;
     max-width: 520px;
   }
   .container {
@@ -302,36 +285,28 @@ button:hover {
     flex: 10;
     height: 80vh;
   }
+  .slide.active .playInfo {
+    width: 85%;
+  }
+  .slide button{
+    float: right;
+  }
   audio {
-    max-width: 100%;
-    margin-right: 5%;
+    width: 70%;
   }
   .slide .middle {
-    width: 30vw;
-    bottom: 50%;
-    left: 50%;
+    top: 73%;
+    left: 40%;
+    display: flex;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    opacity: 0;
+  }
+  #showLyrics {
+    left: 75%;
+    top: 0;
+    max-height: 100%;
+    width: 25%;
+    opacity: 0.9;
   }
 }
-
-/* Modules will scale with document */
-/* .header {
-  font-size: 1.5rem;
-}
-.footer {
-  font-size: 0.75rem;
-}
-.sidebar {
-  font-size: 0.85rem;
-} */
-
-/* Type will scale with modules */
-/* h1 {
-  font-size: 2em;
-  color: var(--text-color);
-}
-h2 {
-  font-size: 1.2em;
-}
-h3 {
-  font-size: 1.2em;
-} */
