@@ -1,0 +1,337 @@
+/* Document level adjustments */
+html {
+  font-size: 14px;
+  background-color: var(--main-black-color);
+  /* font-family: Arial, Helvetica, sans-serif;   */
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --tomato-main-color: #db1b34;
+  --tomato2-main-color: #f92c47;
+  --white-color: #ffffff;
+  --main-bg-color: #1c1c1e;
+  --table-color: #fbfbfb;
+  --play-btn-color: #e7e9ee;
+  --left-side-bg-color: #d1d6e1;
+  --left-side-table-color: #c6c6c6;
+  --main-black-color: #000;
+  --text-color: #a4aebf;
+  --song-bg-color: #3e3e53;
+  --box-shadow-color: #8e8e92;
+}
+main {
+  padding: 1rem;
+  color: var(--white-color);
+}
+section {
+  width: 100%;
+  padding: 0 auto;
+}
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+h1 {
+  margin: 1rem 0;
+}
+/* search section */
+form {
+  max-width: 600px;
+  margin: 1rem 0;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: var(--main-bg-color);
+  width: 100%;
+}
+input {
+  padding: 5px 10px;
+  background-color: var(--main-bg-color);
+  border: none;
+  width: 85%;
+  color: var(--tomato2-main-color);
+}
+#searchBtn,
+.fa-microphone {
+  background-color: var(--main-bg-color);
+  padding: 5px;
+  border-radius: 5px;
+}
+/* first page section */
+.card {
+  border-radius: 5px;
+  background-color: var(--main-bg-color);
+  /* box-shadow: 3px 3px 8px 1px #8E8E92; */
+  color: var(--white-color);
+  padding-left: 20px;
+  margin: 5px;
+  width: 46%;
+  /* width: 48%; */
+  max-width: 465px;
+  /* max-width: 520px; */
+  min-height: 130px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.card:hover {
+  transform: scale(1.02);
+  transition: 0.5s ease;
+  opacity: 0.5;
+}
+/* result of search section */
+.result {
+  font-family: "Muli", sans-serif;
+  overflow: hidden;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  width: 100%;
+  display: flex;
+  /* padding: 0 20px; */
+  flex-direction: column;
+}
+.slide {
+  height: 15vh;
+  width: 100%;
+  border-radius: 10px;
+  /* margin: 5px; */
+  margin: 5px 0;
+  cursor: pointer;
+  color: #fff;
+  /* flex: 1; */
+  flex-grow: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  transition: all 500ms ease-in-out;
+  /* overflow: auto; */
+}
+.slide .info {
+  position: absolute;
+  font-size: 1.2rem;
+  text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1),
+    1px 1px 1px rgba(0, 0, 0, 0.5);
+  top: 5%;
+  left: 3%;
+  margin: 0;
+  opacity: 1;
+}
+.slide .playInfo {
+  pointer-events: none;
+  position: absolute;
+  width: 80vw;
+  font-size: 1rem;
+  bottom: 5%;
+  left: 5%;
+  margin: 0;
+  opacity: 0;
+}
+.slide.active {
+  /* flex: 10; */
+  flex-grow: 10;
+  height: 70vh;
+}
+.slide.active .playInfo {
+  opacity: 1;
+  transition: opacity 0.3s ease-in 0.4s;
+  pointer-events: auto;
+}
+audio {
+  max-width: 70vw;
+  margin-right: 25%;
+}
+button {
+  font-size: 1rem;
+  /* margin: 10px; */
+  padding: 10px 30px;
+  border-radius: 15px;
+  border: none;
+  color: var(--white-color);
+  background-color: var(--tomato2-main-color);
+}
+button:hover {
+  color: var(--table-color);
+  background-color: var(--tomato-main-color);
+}
+.slide .middle {
+  position: absolute;
+  /* width: 30vw; */
+  font-size: 1rem;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  margin: 0;
+  opacity: 0;
+}
+.slide.active .middle {
+  opacity: 1;
+  transition: opacity 0.3s ease-in 0.4s;
+  pointer-events: auto;
+}
+/* next prev button section */
+.btn {
+  display: none;
+  text-align: center;
+}
+.btn button {
+  display: inline-block;
+}
+/* showLyrics section */
+#showLyrics {
+  font-family: "Muli", sans-serif;
+  display: none;
+  line-height: 1.5;
+  position: fixed;
+  z-index: 1;
+  left: 5%;
+  top: 5%;
+  max-height: 90%;
+  width: 90%;
+  padding: 2rem;
+  overflow: auto;
+  background-color: var(--main-bg-color);
+}
+/* #showLyrics .showLyrics {
+  background-color: var(--main-bg-color);
+  max-width: 20% auto;
+  padding: 2rem;
+  width: 70%;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.5), 0 7px 20px 0 rgba(0, 0, 0, 0.5);
+  opacity: 0.95;
+} */
+.closeBtn {
+  color: var(--play-btn-color);
+  float: right;
+  padding-left: 1rem;
+  font-size: 2rem;
+}
+.closeBtn:hover,
+.closeBtn:focus {
+  color: var(--tomato-main-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* play music animation */
+.middle {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+.bar {
+  width: 10px;
+  height: 70px;
+  background: #fff;
+  display: inline-block;
+  transform-origin: bottom center;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  box-shadow: 5px 10px 20px inset rgba(255, 23, 25.2);
+  animation: loader 1.2s linear infinite;
+}
+.bar1 {
+  animation-delay: 0.1s;
+}
+.bar2 {
+  animation-delay: 0.2s;
+}
+.bar3 {
+  animation-delay: 0.3s;
+}
+.bar4 {
+  animation-delay: 0.4s;
+}
+.bar5 {
+  animation-delay: 0.5s;
+}
+.bar6 {
+  animation-delay: 0.6s;
+}
+.bar7 {
+  animation-delay: 0.7s;
+}
+.bar8 {
+  animation-delay: 0.8s;
+}
+
+@keyframes loader {
+  0% {
+    transform: scaleY(0.1);
+    /* background: ; */
+  }
+  50% {
+    transform: scaleY(1);
+    background: rgb(111, 112, 110);
+  }
+  100% {
+    transform: scaleY(0.1);
+    background: transparent;
+  }
+}
+
+@media (min-width: 600px) {
+  html {
+    font-size: 18px;
+  }
+  main {
+    max-width: 1800px;
+    padding: 3rem;
+  }
+  .card {
+    max-width: 520px;
+  }
+  .container {
+    padding: 0 20px;
+    flex-direction: row;
+  }
+  .slide {
+    height: 80vh;
+    margin: 5px;
+    flex: 1;
+  }
+  .slide.active {
+    flex: 10;
+    height: 80vh;
+  }
+  audio {
+    max-width: 100%;
+    margin-right: 5%;
+  }
+  .slide .middle {
+    width: 30vw;
+    bottom: 50%;
+    left: 50%;
+  }
+}
+
+/* Modules will scale with document */
+/* .header {
+  font-size: 1.5rem;
+}
+.footer {
+  font-size: 0.75rem;
+}
+.sidebar {
+  font-size: 0.85rem;
+} */
+
+/* Type will scale with modules */
+/* h1 {
+  font-size: 2em;
+  color: var(--text-color);
+}
+h2 {
+  font-size: 1.2em;
+}
+h3 {
+  font-size: 1.2em;
+} */
