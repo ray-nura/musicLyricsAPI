@@ -26,7 +26,7 @@ function firstStart(impData) {
 
 // --------call start function !!! -----------------
 firstStart(musicIMGArray);
-// firstStart(firstPageDataArray);
+firstStart(firstPageDataArray);
 
 // get search value
 document.querySelector("#searchBtn").addEventListener("click", e => {
