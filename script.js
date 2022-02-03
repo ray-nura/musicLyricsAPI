@@ -10,10 +10,10 @@ const firstPageH1 = document.querySelector("#first-page");
 const resultSection = document.querySelector(".result");
 const btnPrev = document.querySelector("#prevBtn");
 const btnNext = document.querySelector("#nextBtn");
+const home = document.querySelector("#home");
 const btnNextPrevSection = document.querySelector(".btn");
 const showLyricsSection = document.querySelector("#showLyrics")
-
-//  first page function
+// ----------------- first page function-----------------
 function firstStart(impData) {
     const firstPageCard = document.createElement("div");
     firstPageCard.className = "flex";
@@ -23,12 +23,11 @@ function firstStart(impData) {
     </div> `).join('')}`
     firstPageSection.appendChild(firstPageCard)
 }
-
-// --------call start function !!! -----------------
-firstStart(musicIMGArray);
+// ----------call start function !!! -----------------
 firstStart(firstPageDataArray);
-
-// get search value
+firstStart(musicIMGArray);
+home.addEventListener("click", firstStart)
+// --------- get search value ----------------------
 document.querySelector("#searchBtn").addEventListener("click", e => {
     // e.preventDefault();
     beginSearch(searchVal.value);
@@ -39,12 +38,12 @@ searchVal.addEventListener("keypress", e => {
         beginSearch(searchVal.value);
     }
 })
-// get search value from img category
+// get search value from img category -----------------
 firstPageSection.addEventListener("click", e => {
     const clickedElement = e.target.innerText;
     beginSearch(clickedElement);
 })
-// Search function/  greate searched Array from Data
+// Search function/  greate searched Array from Data -----------------
 async function beginSearch(searchValue) {
     const searchResult = await fetch(`${apiURL}/suggest/${searchValue}`);
     const data = await searchResult.json();
@@ -80,7 +79,7 @@ async function beginSearch(searchValue) {
         }
     })
 }
-// Display Searched Array  
+//----------------- Display Searched Array-----------------
 function displayData(data, num, lengthData, searchValue) {
     firstPageSection.style.display = "none";
     firstPageH1.style.display = "none";
@@ -93,9 +92,9 @@ function displayData(data, num, lengthData, searchValue) {
     ${data.map(el => `
     <div class="slide" style="background-image:url('${el.artist.picture_big}');">
         <div class="info">
-            <h3 class="artistName">${el.artist.name}</h3>
+            <h4 class="artistName">${el.artist.name}</h4>
             <h3 class="titleName">${el.title}</h3>
-            <h3 class="titleName">Albom: ${el.album.title}</h3>
+            <h5 class="titleName">Albom: ${el.album.title}</h5>
         </div>
         <div class="middle">
             <div class="bar bar3"></div> <div class="bar bar2"></div>
@@ -131,7 +130,7 @@ function displayData(data, num, lengthData, searchValue) {
             slide.classList.remove('active');
         })
     }
-    // click btn "get Lyrics"
+    // -----------------click btn "get Lyrics" -----------------
     const getlyrics = document.querySelectorAll(".getlyricsBtn");
     for (const btn of getlyrics) {
         btn.addEventListener("click", e => {
@@ -141,7 +140,7 @@ function displayData(data, num, lengthData, searchValue) {
             getLyrics(artist, songTitle)
         })
     }
-    // get Lyrics from Data and display
+    // get Lyrics from Data and display-----------------
     async function getLyrics(artist, songTitle) {
         showLyricsSection.innerHTML = "";
         showLyricsSection.style.display = "block";

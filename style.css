@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap");
 html {
   font-size: 14px;
   background-color: var(--main-black-color);
-  font-family: "Muli", sans-serif;
+  font-family: "Oleo Script", cursive;
+  font-family: "Allerta Stencil", sans-serif;
   /* font-family: Arial, Helvetica, sans-serif;   */
 }
 * {
@@ -18,7 +21,7 @@ html {
   --play-btn-color: #e7e9ee;
   --left-side-bg-color: #d1d6e1;
   --left-side-table-color: #c6c6c6;
-  --main-black-color: #1D1E1F;
+  --main-black-color: #1d1e1f;
   --text-color: #a4aebf;
   --song-bg-color: #3e3e53;
   --box-shadow-color: #8e8e92;
@@ -61,6 +64,16 @@ input {
   padding: 5px;
   border-radius: 5px;
 }
+
+#home {
+  float: right;
+  margin-left: 0;
+  color: var(--white-color);
+  background-color: var(--main-bg-color);
+  padding: 7px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+}
 /* first page section */
 .card {
   border-radius: 5px;
@@ -70,7 +83,7 @@ input {
   padding-left: 20px;
   margin: 5px;
   width: 46%;
-  max-width: 465px;  /* 520px; */
+  max-width: 465px; /* 520px; */
   min-height: 130px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -83,11 +96,11 @@ input {
 }
 /* result of search section */
 .result {
-  font-family: "Muli", sans-serif;
+  /* font-family: "Muli", sans-serif; */
   overflow: hidden;
   margin: 0 auto;
 }
-.result h1{
+.result h1 {
   text-align: center;
 }
 .container {
@@ -114,13 +127,15 @@ input {
 .slide .info {
   position: absolute;
   font-size: 1.2rem;
-  text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1),
-    1px 1px 1px rgba(0, 0, 0, 0.5);
+  /* text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1),
+    1px 1px 1px rgba(0, 0, 0, 0.5); */
   top: 5%;
   left: 3%;
   margin: 0;
   opacity: 1;
+  color: #db1b34;
 }
+
 .slide .playInfo {
   pointer-events: none;
   position: absolute;
@@ -180,7 +195,9 @@ button:hover {
 }
 /* showLyrics section */
 #showLyrics {
-  font-family: "Muli", sans-serif;
+  /* font-family: "Muli", sans-serif; */
+  color: var(--white-color);
+  text-decoration: none;
   display: none;
   line-height: 1.5;
   position: fixed;
@@ -279,7 +296,22 @@ button:hover {
   .slide {
     height: 80vh;
     margin: 5px;
-    flex: 1;
+    flex: 2;
+  }
+  .slide .info {
+    transform-origin: 0 0;
+    transform: rotate(-90deg);
+    line-height: 1;
+    top: 95%;
+    left: 1%;
+    width: 500px;
+    text-align: left;
+  }
+  .slide.active .info {
+    transform: rotate(0);
+    line-height: 1.3;
+    top: 5%;
+    left: 3%;
   }
   .slide.active {
     flex: 10;
@@ -288,7 +320,7 @@ button:hover {
   .slide.active .playInfo {
     width: 85%;
   }
-  .slide button{
+  .slide button {
     float: right;
   }
   audio {
