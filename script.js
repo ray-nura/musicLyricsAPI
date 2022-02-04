@@ -13,6 +13,13 @@ const btnNext = document.querySelector("#nextBtn");
 const home = document.querySelector("#home");
 const btnNextPrevSection = document.querySelector(".btn");
 const showLyricsSection = document.querySelector("#showLyrics")
+const favoriteSongs = document.querySelector(".favorite-songs")
+const favoriteSongsBtn = document.querySelector("#myList")
+const favoritelyricsBtn = document.querySelector("#getlyrics")
+
+const listOfLyrics = [];
+
+
 // ----------------- first page function-----------------
 function firstStart(impData) {
     const firstPageCard = document.createElement("div");
@@ -25,7 +32,7 @@ function firstStart(impData) {
 }
 // ----------call start function !!! -----------------
 firstStart(firstPageDataArray);
-firstStart(musicIMGArray);
+// firstStart(musicIMGArray);
 home.addEventListener("click", firstStart)
 // --------- get search value ----------------------
 document.querySelector("#searchBtn").addEventListener("click", e => {
@@ -110,7 +117,7 @@ function displayData(data, num, lengthData, searchValue) {
             <audio controls>
                 <source src="${el.preview}" type="audio/mpeg">Your browser does not support the audio element.
             </audio>
-            <button class="getlyricsBtn" data-artist="${el.artist.name}" data-songtitle="${el.title}">Get lyrics</button>
+            <button class="getlyricsBtn" data-img="${el.artist.picture_big}" data-mp3="${el.preview}" data-artist="${el.artist.name}" data-songtitle="${el.title}">Get lyrics</button>
         </div>
    </div>`).join('')}</div>`;
     console.log(resultCard);
@@ -137,11 +144,14 @@ function displayData(data, num, lengthData, searchValue) {
             const clickedElement = e.target;
             const artist = clickedElement.getAttribute('data-artist');
             const songTitle = clickedElement.getAttribute('data-songtitle');
-            getLyrics(artist, songTitle)
+            const songMp3 = clickedElement.getAttribute('data-mp3');
+            const songImg = clickedElement.getAttribute('data-img');
+            getLyrics(artist, songTitle, songMp3, songImg)
         })
     }
     // get Lyrics from Data and display-----------------
-    async function getLyrics(artist, songTitle) {
+    async function getLyrics(artist, songTitle, songMp3, songImg) {
+
         showLyricsSection.innerHTML = "";
         showLyricsSection.style.display = "block";
         const lyricsS = document.createElement("div");
@@ -155,6 +165,15 @@ function displayData(data, num, lengthData, searchValue) {
             lyricsS.innerHTML = `
             <span class="closeBtn">&times;</span><p>${lyrics}</p>`
             showLyricsSection.appendChild(lyricsS);
+            const myMuz = {
+                artist: artist,
+                muzTitle: songTitle,
+                mp3: songMp3,
+                img: songImg,
+                lyricsm: lyrics,
+            }
+            listOfLyrics.push(myMuz); // list of favorite lyrics
+            console.log(listOfLyrics);
         } else {
             showLyricsSection.innerHTML = "";
             lyricsS.innerHTML = `
@@ -166,4 +185,60 @@ function displayData(data, num, lengthData, searchValue) {
             showLyricsSection.style.display = "none";
         })
     }
+
+
 }
+
+function myFavoriteList(e) {
+    e.preventDefault();
+    firstPageH1.style.display = "none";
+    btnNextPrevSection.style.display = "none";
+    resultSection.innerHTML = ' ';
+    let n = 0;
+    for (let el of listOfLyrics) { el.id = n++ }
+    console.log(listOfLyrics)
+    const favoriteSongsList = document.createElement("div");
+    favoriteSongsList.innerHTML = ` 
+    ${listOfLyrics.map(el => `
+    <div class="clearfix">
+          <img  
+            src="${el.img}" id="getlyrics11"  width="120px" alt="${el.id}">
+            <p id="${el.id}" ><i class="fas fa-file-alt"></i>showLyrics</p>
+            <span id="${el.id}"> ${el.artist} -- <strong> ${el.muzTitle} </strong> </span>
+          <audio controls width="200px">
+            <source src="${el.mp3}"
+              type="audio/mpeg">Your browser does not support the audio element.
+          </audio>
+        </div>
+        <hr>
+    `).join('')}`;
+    favoriteSongs.appendChild(favoriteSongsList);
+}
+
+function favoritelyricsShow(e) {
+    // e.preventDefault();
+    console.log('clickkkk')
+    const item = e.target.id
+    console.log(e.target)
+    console.log(item)
+    const searchLyrics = listOfLyrics.filter(el => (el.id == item))
+    showLyricsSection.innerHTML = "";
+    showLyricsSection.style.display = "block";
+    const lyricsS = document.createElement("div");
+    lyricsS.className = "showLyrics";
+    lyricsS.innerHTML = `
+        <span class="closeBtn">&times;</span><p>${searchLyrics.lyricsm}</p>`
+    showLyricsSection.appendChild(lyricsS);
+    document.querySelector(".closeBtn").addEventListener("click", () => {
+        showLyricsSection.style.display = "none";
+    })
+}
+
+const xxx = document.querySelector("#getlyrics11")
+if (xxx){xxx.addEventListener("clicked", favoritelyricsShow)}
+
+
+favoriteSongsBtn.addEventListener("click", myFavoriteList)
+// favoriteSongs.addEventListener("click", e => {
+//     if(e.target.innerText === "showLyrics") favoritelyricsShow
+// })

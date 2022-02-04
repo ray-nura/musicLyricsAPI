@@ -65,14 +65,18 @@ input {
   border-radius: 5px;
 }
 
-#home {
+#home,
+#myList {
   float: right;
-  margin-left: 0;
+  margin-left: 5px;
   color: var(--white-color);
   background-color: var(--main-bg-color);
   padding: 7px 15px;
   text-decoration: none;
   border-radius: 5px;
+}
+#myList {
+  color: var(--tomato2-main-color);
 }
 /* first page section */
 .card {
@@ -156,7 +160,7 @@ input {
   transition: opacity 0.3s ease-in 0.4s;
   pointer-events: auto;
 }
-audio {
+.slide audio {
   width: 90%;
 }
 button {
@@ -275,7 +279,30 @@ button:hover {
     background: transparent;
   }
 }
-
+.favorite-songs {
+  font-size: 1.5rem;
+}
+.clearfix {
+  clear: left;
+  overflow: auto;
+  padding: 10px;
+}
+.favorite-songs audio {
+  width: 90%;
+}
+.favorite-songs img {
+  float: left;
+  padding-right: 10px;
+  cursor: pointer;
+}
+.favorite-songs span {
+  pointer-events: none;
+}
+#getlyrics {
+  color: var(--tomato-main-color);
+  font-size: 3rem;
+  margin: 5px 10px;
+}
 @media (min-width: 850px) {
   html {
     font-size: 18px;
@@ -340,5 +367,8 @@ button:hover {
     max-height: 100%;
     width: 25%;
     opacity: 0.9;
+  }
+  .favorite-songs audio {
+    width: 25%;
   }
 }
