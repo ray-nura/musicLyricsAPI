@@ -15,15 +15,15 @@
   <main>
     <section class="search">
       <!-- 1 Create search input -->
-      <a href="" id="home">HOME</a>
-      <a href="" id="myList"><i class="fas fa-heart"></i></a>
+      <span href="" id="home">HOME</span>
+      <span href="" id="myList"><i class="fas fa-heart"></i></span>
       <h1>Search Lyrics</h1>
-      <form id="form">
+      <div id="form">
         <i id="searchBtn" class="fas fa-search"></i>
         <input type="text" id="searchInput" placeholder="Artists, Songs, Lyrics, and More" />
         <i class="fas fa-microphone"></i>
         <!-- <button id="searchBtn">Search</button> -->
-      </form>
+      </div>
     </section>
 
     <!-- the first main page will be displayed on the first time/refresh or when you click on "input" to search -->
@@ -58,3 +58,47 @@
 </body>
 
 </html>
+
+
+<!-- <body data-new-gr-c-s-check-loaded="14.1047.0" data-gr-ext-installed=""> -->
+  
+<!-- Code injected by live-server -->
+<!-- <script type="text/javascript"> -->
+<!-- 	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]> -->
+<!-- </script> -->
+
+<!-- </body> --> -->

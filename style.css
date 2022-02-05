@@ -43,7 +43,7 @@ h1 {
   margin: 1rem 0;
 }
 /* search section */
-form {
+#form {
   max-width: 600px;
   margin: 1rem 0;
   padding: 5px;
@@ -75,8 +75,33 @@ input {
   text-decoration: none;
   border-radius: 5px;
 }
-#myList {
+#myList,
+.fa-heart {
   color: var(--tomato2-main-color);
+}
+.playInfo .fa-heart,
+.icon-heart {
+  color: var(--white-color);
+  font-size: 1.8rem;
+  padding: 5px;
+  float: right;
+  clear: both;
+  margin-top: 0;
+  border-radius: 15px;
+  border: none;
+  color: var(--white-color);
+}
+
+.playInfo .fa-heart {
+  pointer-events: none;
+}
+.added .fa-heart {
+  color: var(--tomato2-main-color);
+  background-color: transparent;
+}
+.icon-heart,
+.added {
+  background-color: transparent;
 }
 /* first page section */
 .card {

@@ -5,23 +5,30 @@ const firstPageDataArray = firstPageData();
 const musicIMGArray = musicIMG();
 const apiURL = "https://api.lyrics.ovh";
 const searchVal = document.querySelector("#searchInput")
+const home = document.querySelector("#home");
+const favoriteSongsBtn = document.querySelector("#myList")
 const firstPageSection = document.querySelector(".first-page");
 const firstPageH1 = document.querySelector("#first-page");
 const resultSection = document.querySelector(".result");
 const btnPrev = document.querySelector("#prevBtn");
 const btnNext = document.querySelector("#nextBtn");
-const home = document.querySelector("#home");
 const btnNextPrevSection = document.querySelector(".btn");
 const showLyricsSection = document.querySelector("#showLyrics")
-const favoriteSongs = document.querySelector(".favorite-songs")
-const favoriteSongsBtn = document.querySelector("#myList")
+const favoriteSongsSection = document.querySelector(".favorite-songs")
 const favoritelyricsBtn = document.querySelector("#getlyrics")
 
 const listOfLyrics = [];
 
-
+// ----------call start function !!! -----------------
+firstStart(firstPageDataArray);
 // ----------------- first page function-----------------
 function firstStart(impData) {
+    firstPageSection.innerHTML = ' ';
+    firstPageH1.style.display = "block";
+    firstPageSection.style.display = "block";
+    resultSection.innerHTML = ' ';
+    showLyricsSection.innerHTML = ' ';
+    favoriteSongsSection.innerHTML = '';
     const firstPageCard = document.createElement("div");
     firstPageCard.className = "flex";
     firstPageCard.innerHTML = `${impData.map(el => `
@@ -30,10 +37,13 @@ function firstStart(impData) {
     </div> `).join('')}`
     firstPageSection.appendChild(firstPageCard)
 }
-// ----------call start function !!! -----------------
-firstStart(firstPageDataArray);
+// ----------call HOME function !!! -----------------
 // firstStart(musicIMGArray);
-home.addEventListener("click", firstStart)
+home.addEventListener("click", e => {
+    // e.preventDefault();
+    firstStart(musicIMGArray);
+    // firstStart(firstPageDataArray);
+})
 // --------- get search value ----------------------
 document.querySelector("#searchBtn").addEventListener("click", e => {
     // e.preventDefault();
@@ -60,7 +70,7 @@ async function beginSearch(searchValue) {
     let num = 0;
     displayData(data1, num, lengthData, searchValue);
     // display Next button
-    if (data.data.length > 5) {
+    if (data.data.length > 4) {
         btnNextPrevSection.style.display = "block";
         btnPrev.style.display = 'none';
         btnNext.style.display = 'inline-block';
@@ -92,6 +102,7 @@ function displayData(data, num, lengthData, searchValue) {
     firstPageH1.style.display = "none";
     resultSection.innerHTML = ' ';
     showLyricsSection.innerHTML = ' ';
+    favoriteSongsSection.innerHTML = '';
     const resultCard = document.createElement("div");
     resultCard.innerHTML = ` 
     <h1>All Songs with the word: "${searchValue}"</h1>
@@ -117,12 +128,15 @@ function displayData(data, num, lengthData, searchValue) {
             <audio controls>
                 <source src="${el.preview}" type="audio/mpeg">Your browser does not support the audio element.
             </audio>
-            <button class="getlyricsBtn" data-img="${el.artist.picture_big}" data-mp3="${el.preview}" data-artist="${el.artist.name}" data-songtitle="${el.title}">Get lyrics</button>
-        </div>
+            <button class="getlyricsBtn" data-img="${el.artist.picture_big}" data-mp3="${el.preview}" 
+            data-artist="${el.artist.name}" data-songtitle="${el.title}">Get lyrics</button>
+            <button class="icon-heart" data-img="${el.artist.picture_big}" data-mp3="${el.preview}" 
+            data-artist="${el.artist.name}" data-songtitle="${el.title}"><i class="fas fa-heart"></i></button>
+            </div>
    </div>`).join('')}</div>`;
     console.log(resultCard);
     resultSection.appendChild(resultCard);
-    // adding ACTIVE class to slide
+    // ------ adding ACTIVE class to slide ------------
     const slides = document.querySelectorAll('.slide');
     slides[0].classList.add('active');
     for (const slide of slides) {
@@ -144,14 +158,11 @@ function displayData(data, num, lengthData, searchValue) {
             const clickedElement = e.target;
             const artist = clickedElement.getAttribute('data-artist');
             const songTitle = clickedElement.getAttribute('data-songtitle');
-            const songMp3 = clickedElement.getAttribute('data-mp3');
-            const songImg = clickedElement.getAttribute('data-img');
-            getLyrics(artist, songTitle, songMp3, songImg)
+            getLyrics(artist, songTitle)
         })
     }
     // get Lyrics from Data and display-----------------
-    async function getLyrics(artist, songTitle, songMp3, songImg) {
-
+    async function getLyrics(artist, songTitle) {
         showLyricsSection.innerHTML = "";
         showLyricsSection.style.display = "block";
         const lyricsS = document.createElement("div");
@@ -165,15 +176,6 @@ function displayData(data, num, lengthData, searchValue) {
             lyricsS.innerHTML = `
             <span class="closeBtn">&times;</span><p>${lyrics}</p>`
             showLyricsSection.appendChild(lyricsS);
-            const myMuz = {
-                artist: artist,
-                muzTitle: songTitle,
-                mp3: songMp3,
-                img: songImg,
-                lyricsm: lyrics,
-            }
-            listOfLyrics.push(myMuz); // list of favorite lyrics
-            console.log(listOfLyrics);
         } else {
             showLyricsSection.innerHTML = "";
             lyricsS.innerHTML = `
@@ -185,12 +187,39 @@ function displayData(data, num, lengthData, searchValue) {
             showLyricsSection.style.display = "none";
         })
     }
-
-
+    const iconHeartBtn = document.querySelectorAll(".icon-heart");
+    for (const btn of iconHeartBtn) {
+        btn.addEventListener("click", e => {
+            const clickedElement = e.target;
+            btn.classList.toggle('added')
+            console.log(clickedElement);
+            const artist = clickedElement.getAttribute('data-artist');
+            const songTitle = clickedElement.getAttribute('data-songtitle');
+            const songMp3 = clickedElement.getAttribute('data-mp3');
+            const songImg = clickedElement.getAttribute('data-img');
+            fetch(`${apiURL}/v1/${artist}/${songTitle}`)
+                .then(resp => {
+                    if (resp.ok) {
+                        resp.json().then(data => {
+                            const lyrics1 = data.lyrics.replace(/(\n\n\n\n)/g, '<br><br>');
+                            const lyrics = lyrics1.replace(/(\r\n|\r|\n)/g, '</p> <p>');
+                            const myMuz = { artist: artist, muzTitle: songTitle, mp3: songMp3, img: songImg, lyricsm: lyrics }
+                            listOfLyrics.push(myMuz); // list of favorite lyrics
+                        })
+                    } else {
+                        const myMuz = { artist: artist, muzTitle: songTitle, mp3: songMp3, img: songImg, lyricsm: "not lyrics" }
+                        listOfLyrics.push(myMuz); // list of favorite lyrics
+                    }
+                    console.log(listOfLyrics);
+                })
+        })
+    }
 }
 
 function myFavoriteList(e) {
     e.preventDefault();
+    favoriteSongsSection.innerHTML = ' ';
+    firstPageSection.innerHTML = ' ';
     firstPageH1.style.display = "none";
     btnNextPrevSection.style.display = "none";
     resultSection.innerHTML = ' ';
@@ -200,10 +229,10 @@ function myFavoriteList(e) {
     const favoriteSongsList = document.createElement("div");
     favoriteSongsList.innerHTML = ` 
     ${listOfLyrics.map(el => `
-    <div class="clearfix">
+    <div class="clearfix" id="${el.id}">
           <img  
-            src="${el.img}" id="getlyrics11"  width="120px" alt="${el.id}">
-            <p id="${el.id}" ><i class="fas fa-file-alt"></i>showLyrics</p>
+            src="${el.img}" id="${el.id}" class="showFavoriteLyrics" width="120px" alt="${el.artist}">
+            
             <span id="${el.id}"> ${el.artist} -- <strong> ${el.muzTitle} </strong> </span>
           <audio controls width="200px">
             <source src="${el.mp3}"
@@ -212,33 +241,25 @@ function myFavoriteList(e) {
         </div>
         <hr>
     `).join('')}`;
-    favoriteSongs.appendChild(favoriteSongsList);
+    favoriteSongsSection.appendChild(favoriteSongsList);
+    //  show lyrics from favorite list
+    function favoriteLyricsShow(e) {
+        const item = e.target.id
+        const searchLyrics = listOfLyrics.filter(el => (el.id === +item))
+        showLyricsSection.innerHTML = "";
+        showLyricsSection.style.display = "block";
+        const lyricsS = document.createElement("div");
+        lyricsS.className = "showLyrics";
+        lyricsS.innerHTML = `<span class="closeBtn">&times;</span><p>
+        ${searchLyrics[0].lyricsm}</p>`
+        showLyricsSection.appendChild(lyricsS);
+        document.querySelector(".closeBtn").addEventListener("click", () => {
+            showLyricsSection.style.display = "none";
+        })
+    }
+    const showLyricsImg = document.querySelectorAll(".showFavoriteLyrics")
+    for (const fList of showLyricsImg) {
+        fList.addEventListener("click", favoriteLyricsShow)
+    }
 }
-
-function favoritelyricsShow(e) {
-    // e.preventDefault();
-    console.log('clickkkk')
-    const item = e.target.id
-    console.log(e.target)
-    console.log(item)
-    const searchLyrics = listOfLyrics.filter(el => (el.id == item))
-    showLyricsSection.innerHTML = "";
-    showLyricsSection.style.display = "block";
-    const lyricsS = document.createElement("div");
-    lyricsS.className = "showLyrics";
-    lyricsS.innerHTML = `
-        <span class="closeBtn">&times;</span><p>${searchLyrics.lyricsm}</p>`
-    showLyricsSection.appendChild(lyricsS);
-    document.querySelector(".closeBtn").addEventListener("click", () => {
-        showLyricsSection.style.display = "none";
-    })
-}
-
-const xxx = document.querySelector("#getlyrics11")
-if (xxx){xxx.addEventListener("clicked", favoritelyricsShow)}
-
-
 favoriteSongsBtn.addEventListener("click", myFavoriteList)
-// favoriteSongs.addEventListener("click", e => {
-//     if(e.target.innerText === "showLyrics") favoritelyricsShow
-// })
